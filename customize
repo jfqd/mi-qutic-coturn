@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -o errexit
+
+export LC_ALL=en_US.utf8
+export LANGUAGE=en_US.utf8
+export LANG=en_US.utf8
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+MUNIN_PLUGINS=""
+
+echo "* Activate munin plugins"
+/usr/local/bin/munin-node-plugins ${MUNIN_PLUGINS}
+
+echo "* Get latest"
+apt-get -y update
+apt-get -y upgrade
+apt-get -y dist-upgrade
+
+echo "* Ensure bootstrap will run next time"
+rm -rf /var/lib/bootstrap
+
+echo "* Cleaning up."
+rm -rf /usr/local/var/tmp/*
+history -c

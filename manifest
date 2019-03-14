@@ -1,0 +1,8 @@
+name="qutic-coturn"
+organization="qutic development"
+brand="Instance"
+version="20180404.1"
+description="qutic coturn image"
+homepage="https://github.com/jfqd/mi-qutic-coturn"
+users="root admin"
+base="f4eb6ee6-c5a1-11e8-9e53-177841ca2537"
