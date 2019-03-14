@@ -17,6 +17,14 @@ apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
 
+echo "* Setup coturn"
+sed -i 's/#TURNSERVER_ENABLED=1/TURNSERVER_ENABLED=1/' /etc/default/coturn
+mv /usr/local/var/tmp/turnserver.conf /etc/turnserver.conf
+
+echo "* Disable ssh"
+service ssh stop
+systemctl disable ssh
+
 echo "* Ensure bootstrap will run next time"
 rm -rf /var/lib/bootstrap
 
