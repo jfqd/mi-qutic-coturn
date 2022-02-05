@@ -14,11 +14,12 @@ echo "* Activate munin plugins"
 
 echo "* Get latest"
 apt-get -y update
-apt-get -y upgrade
+yes no | apt-get -y upgrade
 apt-get -y dist-upgrade
 
 echo "* Setup coturn"
 sed -i 's/#TURNSERVER_ENABLED=1/TURNSERVER_ENABLED=1/' /etc/default/coturn
+mv /etc/turnserver.conf /etc/turnserver.conf.bak
 mv /usr/local/var/tmp/turnserver.conf /etc/turnserver.conf
 
 echo "* Disable ssh"

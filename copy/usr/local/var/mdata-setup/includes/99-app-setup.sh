@@ -1,6 +1,12 @@
 #!/bin/bash
 
-NEW_PWD=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | shasum -a 256 | awk '{print $1}' | tr -d '\n')
+coturn_pwd
+
+if /native/usr/sbin/mdata-get coturn_pwd 1>/dev/null 2>&1; then
+  NEW_PWD=$(/native/usr/sbin/mdata-get coturn_pwd)
+else
+  NEW_PWD=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | shasum -a 256 | awk '{print $1}' | tr -d '\n')
+fi
 sed -i "s/static-auth-secret=north/static-auth-secret=${NEW_PWD}/" /etc/turnserver.conf
 
 HOSTNAME=$(hostname -f)
