@@ -28,6 +28,10 @@ apt-get -y remove rpcbind || true
 systemctl stop rpcbind.service
 systemctl disable rpcbind.service
 
+echo "* Disable nfs-client"
+systemctl unmask nfs-client.target
+systemctl disable nfs-client.target
+
 echo "* Disable ssh"
 systemctl stop ssh
 systemctl disable ssh
