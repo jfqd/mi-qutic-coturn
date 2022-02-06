@@ -1,3 +1,5 @@
 #!/bin/bash
 
-service coturn restart
+/usr/bin/systemctl restart coturn || true
+
+exit 0
