@@ -7,7 +7,7 @@ if /native/usr/sbin/mdata-get coturn_pwd 1>/dev/null 2>&1; then
 else
   NEW_PWD=$(dd if=/dev/urandom bs=32 count=1 2>/dev/null | shasum -a 256 | awk '{print $1}' | tr -d '\n')
 fi
-sed -i "s/static-auth-secret=north/static-auth-secret=${NEW_PWD}/" /etc/turnserver.conf
+sed -i "s/#static-auth-secret=north/static-auth-secret=${NEW_PWD}/" /etc/turnserver.conf
 
 HOSTNAME=$(hostname -f)
 sed -i "s/#server-name=blackdow.carleon.gov/server-name=${HOSTNAME}/" /etc/turnserver.conf
