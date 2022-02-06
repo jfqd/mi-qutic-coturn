@@ -15,16 +15,25 @@ apt-get -y dist-upgrade
 
 echo "* Setup coturn"
 sed -i 's/#TURNSERVER_ENABLED=1/TURNSERVER_ENABLED=1/' /etc/default/coturn
-mv /etc/turnserver.conf /etc/turnserver.conf.bak
-mv /usr/local/var/tmp/turnserver.conf /etc/turnserver.conf
+cp /etc/turnserver.conf /etc/turnserver.conf.bak
+sed -i \
+    -e "s|PIDFile=/run/turnserver/turnserver.pid|#PIDFile=/run/turnserver/turnserver.pid|" \
+    -e "s|ExecStartPost=/bin/sleep 2|ExecStartPost=/bin/sleep 4|" \
+    /etc/systemd/system/coturn.service
+systemctl reset-failed coturn.service || true
+systemctl daemon-reload || true
+
+echo "* Disable and remove rpcbind"
+apt-get -y remove rpcbind || true
+systemctl stop rpcbind.service
+systemctl disable rpcbind.service
 
 echo "* Disable ssh"
-service ssh stop
+systemctl stop ssh
 systemctl disable ssh
 
 echo "* Ensure bootstrap will run next time"
 rm -rf /var/lib/bootstrap
 
 echo "* Cleaning up."
-rm -rf /usr/local/var/tmp/*
 history -c
