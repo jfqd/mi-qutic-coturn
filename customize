@@ -15,6 +15,8 @@ apt-get -y dist-upgrade
 
 echo "* Setup coturn"
 sed -i 's/#TURNSERVER_ENABLED=1/TURNSERVER_ENABLED=1/' /etc/default/coturn
+mkdir -p /etc/coturn
+chown -R turnserver:turnserver /etc/coturn
 cp /etc/turnserver.conf /etc/turnserver.conf.bak
 sed -i \
     -e "s|PIDFile=/run/turnserver/turnserver.pid|#PIDFile=/run/turnserver/turnserver.pid|" \

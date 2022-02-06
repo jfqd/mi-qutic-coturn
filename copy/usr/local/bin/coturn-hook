@@ -1,0 +1,14 @@
+#!/usr/bin/bash
+
+HOSTNAME=$(/usr/bin/hostname)
+
+/usr/bin/cp /etc/letsencrypt/live/${HOSTNAME}/fullchain.pem /etc/coturn/fullchain.pem
+/usr/bin/cp /etc/letsencrypt/live/${HOSTNAME}/privkey.pem /etc/coturn/privkey.pem
+
+/usr/bin/chown -R turnserver:turnserver /etc/coturn
+
+/usr/bin/systemctl stop coturn || true
+/usr/bin/sleep 5
+/usr/bin/systemctl start coturn || true
+
+exit 0
