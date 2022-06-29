@@ -1,6 +1,6 @@
 {
   "name":         "qutic-coturn",
-  "version":      "20210413.1",
+  "version":      "20210413.2",
   "description":  "qutic coturn image",
   "organization": "qutic development",
   "brand":        "Instance",
