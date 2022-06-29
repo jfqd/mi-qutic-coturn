@@ -25,7 +25,7 @@ sed -i \
     -e "s/#stale-nonce=600/stale-nonce/" \
     -e "s|#cert=/usr/local/etc/turn_server_cert.pem|cert=/etc/coturn/fullchain.pem|" \
     -e "s|#pkey=/usr/local/etc/turn_server_pkey.pem|pkey=/etc/coturn/privkey.pem|" \
-    -e "s/#cipher-list=\"DEFAULT\"/cipher-list=\"ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AES:RSA+3DES:!ADH:!AECDH:!MD5\"/" \
+    -e "s/#cipher-list=\"DEFAULT\"/cipher-list=\"ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384\"/" \
     -e "s/#dh-file=<DH-PEM-file-name>/dh-file=/etc/dh2048.pem/" \
     -e "s/#no-stdout-log/no-stdout-log/" \
     -e "s/#no-multicast-peers/no-multicast-peers/" \
