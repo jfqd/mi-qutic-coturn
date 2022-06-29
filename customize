@@ -23,8 +23,8 @@ cp /etc/turnserver.conf /etc/turnserver.conf.bak
 sed -i \
     -e "s|PIDFile=/run/turnserver/turnserver.pid|#PIDFile=/run/turnserver/turnserver.pid|" \
     -e "s|ExecStartPost=/bin/sleep 2|ExecStartPost=/bin/sleep 4|" \
-    /etc/systemd/system/coturn.service
-mkdir -p /etc/systemd/system/coturn.service.d
+    /lib/systemd/system/coturn.service
+mkdir -p /lib/systemd/system/coturn.service.d
 cat >> /etc/systemd/system/coturn.service.d/override.conf << EOF
 [Service]
 LimitNOFILE=1048576
