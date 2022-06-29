@@ -17,13 +17,24 @@ echo "* Setup coturn"
 sed -i 's/#TURNSERVER_ENABLED=1/TURNSERVER_ENABLED=1/' /etc/default/coturn
 mkdir -p /etc/coturn
 chown -R turnserver:turnserver /etc/coturn
+mkdir -p /var/log/turnserver
+chown turnserver:turnserver /var/log/turnserver
 cp /etc/turnserver.conf /etc/turnserver.conf.bak
 sed -i \
     -e "s|PIDFile=/run/turnserver/turnserver.pid|#PIDFile=/run/turnserver/turnserver.pid|" \
     -e "s|ExecStartPost=/bin/sleep 2|ExecStartPost=/bin/sleep 4|" \
     /etc/systemd/system/coturn.service
-systemctl reset-failed coturn.service || true
+mkdir -p /etc/systemd/system/coturn.service.d
+cat >> /etc/systemd/system/coturn.service.d/override.conf << EOF
+[Service]
+LimitNOFILE=1048576
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+ExecStart=
+ExecStart=/usr/bin/turnserver --daemon -c /etc/turnserver.conf --pidfile /run/turnserver/turnserver.pid --no-stdout-log --simple-log --log-file /var/log/turnserver/turnserver.log
+Restart=always
+EOF
 systemctl daemon-reload || true
+systemctl reset-failed coturn.service || true
 
 echo "* Disable and remove rpcbind"
 apt-get -y remove rpcbind || true
