@@ -1,5 +1,10 @@
 # Changelog
 
+## 20210413.3
+
+* use latest lx-base image
+* add logging for coturn
+
 ## 20210413.2
 
 * disable nfs-client
