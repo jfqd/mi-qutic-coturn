@@ -7,8 +7,6 @@ HOSTNAME=$(/usr/bin/hostname)
 
 /usr/bin/chown -R turnserver:turnserver /etc/coturn
 
-/usr/bin/systemctl stop coturn || true
-/usr/bin/sleep 5
-/usr/bin/systemctl start coturn || true
+/usr/bin/systemctl kill -sUSR2 coturn.service || true
 
 exit 0
